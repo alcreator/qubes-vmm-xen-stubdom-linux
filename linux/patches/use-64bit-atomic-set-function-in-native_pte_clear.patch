@@ -1,0 +1,16 @@
+As with upstream patch "x86/pae: use 64 bit atomic xchg function in native_ptep_get_and_clear", 
+native_pte_clear is also sometimes called for a 32-bit PV guest. This patch adds an atomic64_set
+here, as this was missed in the original patch.
+--- a/arch/x86/include/asm/pgtable-3level.h	2018-09-10 00:05:15.000000000 +1000
++++ b/arch/x86/include/asm/pgtable-3level.h	2018-09-11 11:21:58.075000000 +1000
+@@ -114,9 +114,7 @@ static inline void native_set_pud(pud_t
+ static inline void native_pte_clear(struct mm_struct *mm, unsigned long addr,
+ 				    pte_t *ptep)
+ {
+-	ptep->pte_low = 0;
+-	smp_wmb();
+-	ptep->pte_high = 0;
++	atomic64_set((atomic64_t *)ptep, 0);
+ }
+ 
+ static inline void native_pmd_clear(pmd_t *pmd)

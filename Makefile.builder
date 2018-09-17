@@ -1,5 +1,7 @@
 ifeq ($(PACKAGE_SET),dom0)
-RPM_SPEC_FILES := rpm_spec/xen-hvm-stubdom-linux.spec
+RPM_SPEC_FILES := \
+	rpm_spec/xen-hvm-stubdom-linux.spec \
+	rpm_spec/xen-hvm-stubdom-linux-noarch.spec
 endif
 
 include $(ORIG_SRC)/Makefile.vars

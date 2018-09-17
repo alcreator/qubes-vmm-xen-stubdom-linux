@@ -1,0 +1,32 @@
+Name: xen-hvm-stubdom-linux
+Version: @VERSION@
+Release: 1%{?dist}
+Summary: Linux stubdom files for Xen
+
+Group: System
+License: GPL
+URL: https://www.qubes-os.org/
+
+Requires: xen-libs%{?_x86_64} >= 2001:4.8.2-10
+BuildArch: noarch
+
+Source0: %{name}-%{version}.tar.gz
+
+%description
+This package contains the files (i.e. kernel and rootfs) for a Linux based
+stubdom.
+
+
+%install
+cd ${RPM_BUILD_DIR}/%{name}-%{version}/
+make -f Makefile.stubdom DESTDIR=${RPM_BUILD_ROOT} install
+
+
+%files
+/usr/lib/xen/boot/stubdom-linux-rootfs
+/usr/lib/xen/boot/stubdom-linux-kernel
+/usr/lib/xen/boot/seabios-256k.bin
+
+
+%changelog
+@CHANGELOG@

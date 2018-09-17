@@ -7,3 +7,7 @@ xsa155-linux44-0010-xen-netfront-do-not-use-data-already-exposed-to-back.patch
 xsa155-linux-0011-xen-netfront-add-range-check-for-Tx-response-id.patch
 xsa155-linux312-0012-xen-blkfront-make-local-copy-of-response-before-usin.patch
 xsa155-linux44-0013-xen-blkfront-prepare-request-locally-only-then-put-i.patch
+
+use-64bit-atomic-xchg-function-in-native_ptep_get_and_clear.patch
+use-64bit-atomic-set-function-in-native_pte_clear.patch
+dont-write-ptes-directly-in-32bit-PV-guests.patch
