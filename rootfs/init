@@ -5,7 +5,7 @@ set -x
 mount -t devtmpfs none /dev
 mount -t sysfs /sys /sys
 mount -t proc /proc /proc
-mount -t tmpfs -o size=1m /tmp /tmp
+mount -t tmpfs -o size=1m,nodev,noexec /tmp /tmp
 mount -o remount,ro /
 
 echo 1 > /proc/sys/vm/overcommit_memory
@@ -118,8 +118,14 @@ echo "$line" >&2
 while true; do
     id=$(ls -t /tmp/qmp/req | head -n 1)
     if [ "$id" = "" ]; then
-        sleep 0.1; if [ -n "$(ls -t /tmp/qmp/req)" ]; then touch /tmp/qmp/req; fi &
-        inotifywait -e attrib,create,delete,modify,move /tmp/qmp/req > /dev/null 2>&1
+        inotifywait -e attrib,create,delete,modify,move /tmp/qmp/req 2>&1 | \
+            while read -r watch_setup; do
+                if [ "$watch_setup" = "Watches established." ]; then
+                   if [ -n "$(ls -A /tmp/qmp/req)" ]; then
+                       touch /tmp/qmp/req
+                   fi
+                fi
+            done
         continue
     fi
 
