@@ -29,15 +29,6 @@ build/busybox/.extracted: busybox-$(BUSYBOX_VERSION).tar.bz2
 build/busybox/config.status: build/busybox/.extracted
 	cp busybox/busybox.config build/busybox/.config
 	yes "" | $(MAKE) -C build/busybox oldconfig
-
-#	---Uncomment to build with static uClibc---
-#	cp busybox/busybox-uclibc.config build/busybox/.config
-#	mv build/busybox/.config build/busybox/.config1
-#	grep -v -e ^CONFIG_EXTRA_CFLAGS \
-#		build/busybox/.config1 > build/busybox/.config
-#	echo "CONFIG_EXTRA_CFLAGS=\"-g -isystem $(includedir)/uClibc -nostartfiles -L$(libdir)/uClibc $(libdir)/uClibc/crt1.o $(libdir)/uClibc/crti.o $(libdir)/uClibc/crtn.o\"" >> build/busybox/.config
-#	yes "" | $(MAKE) -C build/busybox oldconfig
-
 	touch $@
 
 build/busybox/busybox: build/busybox/config.status

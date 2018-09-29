@@ -45,10 +45,6 @@ BuildRequires: gcc-plugin-devel
 # Busybox
 BuildRequires: libselinux-devel >= 1.27.7-2
 BuildRequires: libsepol-devel
-# Uncomment for static uClibc busybox
-#BuildRequires: libselinux-static
-#BuildRequires: libsepol-static
-#BuildRequires: uClibc-static
 
 # rootfs
 BuildRequires: xen-runtime >= 2001:4.8.2-10
@@ -85,8 +81,6 @@ cp %{SOURCE1} %{SOURCE2} %{SOURCE3} .
 
 %build
 make -f Makefile.stubdom %{?_smp_mflags} cpu_arch=%{cpu_arch}
-# Uncomment for static uClibc busybox
-#make -f Makefile.stubdom %{?_smp_mflags} cpu_arch=%{cpu_arch} includedir=%{_includedir} libdir=%{_libdir}
 
 
 %install
